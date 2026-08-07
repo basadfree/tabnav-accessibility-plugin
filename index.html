@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TabNav Accessibility Plugin Demo</title>
+    <link rel="stylesheet" href="accessibility.css">
+    <style>
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+        .hero { padding: 60px 30px; text-align: center; background: linear-gradient(135deg, #002B5B, #0056b3); color: #fff; }
+        .hero h1 { font-size: 2.4rem; margin: 0 0 10px; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
+        .content { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to My Standard Website</h1>
+        <p>לוחצים על הכפתור הצף שלמטה כדי לפתוח את תפריט הנגישות ולבדוק את התוסף.</p>
+    </div>
+    <div class="content">
+        <p>This is a testing viewport for our comprehensive open-source accessibility plugin.</p>
+        <p>גרסת הדמו מלמדת כיצד לקרוא לתוסף עם ההגדרות הרצויות: מיקום, צבע, שפת ברירת מחדל וצורת הכפתור.</p>
+    </div>
+
+    <!-- Plugin Scripts Initialization -->
+    <script src="accessibility.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            new AccessibilityPlugin({
+                position: 'bottom-right',
+                primaryColor: '#002B5B',
+                defaultLanguage: 'he',
+                iconShape: 'circle'
+            });
+        });
+    </script>
+</body>
+</html>

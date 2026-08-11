@@ -138,10 +138,16 @@
             this.triggerBtn.style.backgroundColor = this.options.primaryColor;
             this.triggerBtn.innerHTML = ICONS.main;
             this.triggerBtn.setAttribute('aria-label', 'Open Accessibility Options');
+            this.triggerBtn.setAttribute('aria-haspopup', 'dialog');
+            this.triggerBtn.setAttribute('aria-expanded', 'false');
             document.body.appendChild(this.triggerBtn);
 
             this.panel = document.createElement('div');
             this.panel.className = 'acc-main-panel ' + this.options.position;
+            this.panel.id = 'acc-panel';
+            this.panel.setAttribute('role', 'dialog');
+            this.panel.setAttribute('aria-label', 'Accessibility options');
+            this.triggerBtn.setAttribute('aria-controls', this.panel.id);
             if (this.currentLang === 'he') this.panel.classList.add('rtl');
 
             this.renderContent();
@@ -195,12 +201,17 @@
 
         bindEvents() {
             this.triggerBtn.addEventListener('click', () => {
-                this.panel.classList.toggle('active');
+                if (this.panel.classList.contains('active')) {
+                    this.closeMenu();
+                } else {
+                    this.openMenu();
+                }
             });
 
             this.panel.addEventListener('click', (e) => {
-                if (e.target.closest('.acc-close-btn')) {
-                    this.panel.classList.remove('active');
+                const closeBtn = e.target.closest('.acc-close-btn');
+                if (closeBtn) {
+                    this.closeMenu();
                     return;
                 }
 
@@ -226,17 +237,27 @@
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    this.panel.classList.remove('active');
+                    this.closeMenu();
                 }
             });
         }
 
         openMenu() {
             this.panel.classList.add('active');
+            this.triggerBtn.setAttribute('aria-expanded', 'true');
+            const closeBtn = this.panel.querySelector('.acc-close-btn');
+            this._lastTriggerFocus = document.activeElement || this.triggerBtn;
+            if (closeBtn) closeBtn.focus();
         }
 
         closeMenu() {
             this.panel.classList.remove('active');
+            this.triggerBtn.setAttribute('aria-expanded', 'false');
+            if (this._lastTriggerFocus && this._lastTriggerFocus.focus) {
+                this._lastTriggerFocus.focus();
+            } else {
+                this.triggerBtn.focus();
+            }
         }
 
         shade(hex, percent) {

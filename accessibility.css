@@ -222,6 +222,15 @@
 .grid-layout::-webkit-scrollbar-thumb { background: var(--acc-stone-300); border-radius: 999px; }
 .grid-layout::-webkit-scrollbar-thumb:hover { background: var(--acc-stone-500); }
 
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .acc-trigger-btn, .acc-main-panel, .acc-feature-btn, .acc-close-btn, .acc-reset-btn {
+        transition: none !important;
+    }
+    .acc-trigger-btn:hover { transform: none; }
+    .acc-main-panel { transform: none; }
+}
+
 /* --- Responsive --- */
 @media (max-width: 480px) {
     .acc-main-panel { width: calc(100vw - 28px); max-height: 76vh; }

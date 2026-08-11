@@ -116,20 +116,22 @@
         renderContent() {
             const t = translations[this.currentLang];
 
+            const headerStyle = 'background: linear-gradient(135deg, ' + this.options.primaryColor + ' 0%, ' + this.shade(this.options.primaryColor, -25) + ' 100%)';
+
             if (!this.isDisclaimerAccepted) {
                 this.panel.innerHTML = `
-                    <div class="acc-header" style="background-color: ${this.options.primaryColor}">
+                    <div class="acc-header" style="${headerStyle}">
                         <h3>${t.disclaimerTitle}</h3>
                         <button class="acc-close-btn" aria-label="${t.close}">&times;</button>
                     </div>
                     <div class="acc-body disclaimer-body">
                         <p>${t.disclaimerText}</p>
-                        <button class="acc-accept-btn" style="background-color: ${this.options.primaryColor}">${t.acceptBtn}</button>
+                        <button class="acc-accept-btn" style="${headerStyle}">${t.acceptBtn}</button>
                     </div>
                 `;
             } else {
                 this.panel.innerHTML = `
-                    <div class="acc-header" style="background-color: ${this.options.primaryColor}">
+                    <div class="acc-header" style="${headerStyle}">
                         <h3>${t.title}</h3>
                         <button class="acc-close-btn" aria-label="${t.close}">&times;</button>
                     </div>
@@ -142,13 +144,13 @@
                         </select>
                     </div>
                     <div class="acc-body grid-layout">
-                        <button class="acc-feature-btn" data-action="contrast" aria-pressed="false">&#127793; <span>${t.contrast}</span></button>
-                        <button class="acc-feature-btn" data-action="monochrome" aria-pressed="false">&#9899; <span>${t.monochrome}</span></button>
-                        <button class="acc-feature-btn" data-action="cursor" aria-pressed="false">&#127991; <span>${t.bigCursor}</span></button>
-                        <button class="acc-feature-btn" data-action="animations" aria-pressed="false">&#9208;&#65039; <span>${t.stopAnimations}</span></button>
-                        <button class="acc-feature-btn" data-action="text-large" aria-pressed="false">&#128269; <span>${t.textLarge}</span></button>
-                        <button class="acc-feature-btn" data-action="text-spacing" aria-pressed="false">&#8596;&#65039; <span>${t.textSpacing}</span></button>
-                        <button class="acc-feature-btn" data-action="line-height" aria-pressed="false">&#8597;&#65039; <span>${t.lineHeight}</span></button>
+                        <button class="acc-feature-btn" data-action="contrast" aria-pressed="false"><span class="acc-ico">&#127763;</span> <span>${t.contrast}</span></button>
+                        <button class="acc-feature-btn" data-action="monochrome" aria-pressed="false"><span class="acc-ico">&#9899;</span> <span>${t.monochrome}</span></button>
+                        <button class="acc-feature-btn" data-action="cursor" aria-pressed="false"><span class="acc-ico">&#128421;&#65039;</span> <span>${t.bigCursor}</span></button>
+                        <button class="acc-feature-btn" data-action="animations" aria-pressed="false"><span class="acc-ico">&#9208;&#65039;</span> <span>${t.stopAnimations}</span></button>
+                        <button class="acc-feature-btn" data-action="text-large" aria-pressed="false"><span class="acc-ico">&#128269;</span> <span>${t.textLarge}</span></button>
+                        <button class="acc-feature-btn" data-action="text-spacing" aria-pressed="false"><span class="acc-ico">&#8596;&#65039;</span> <span>${t.textSpacing}</span></button>
+                        <button class="acc-feature-btn" data-action="line-height" aria-pressed="false"><span class="acc-ico">&#8597;&#65039;</span> <span>${t.lineHeight}</span></button>
                     </div>
                     <div class="acc-footer">
                         <button class="acc-reset-btn">${t.reset}</button>
@@ -200,6 +202,24 @@
                     this.panel.classList.remove('active');
                 }
             });
+        }
+
+        openMenu() {
+            this.panel.classList.add('active');
+            this.triggerBtn.focus();
+        }
+
+        closeMenu() {
+            this.panel.classList.remove('active');
+        }
+
+        shade(hex, percent) {
+            const num = parseInt(hex.replace('#', ''), 16);
+            const amt = Math.round(2.55 * percent);
+            const r = Math.max(0, Math.min(255, (num >> 16) + amt));
+            const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00ff) + amt));
+            const b = Math.max(0, Math.min(255, (num & 0x0000ff) + amt));
+            return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
         }
 
         toggleFeature(action, btn) {

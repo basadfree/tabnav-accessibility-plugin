@@ -4,34 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TabNav Accessibility Plugin Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="accessibility.css">
     <style>
-        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
-        .hero { padding: 60px 30px; text-align: center; background: linear-gradient(135deg, #002B5B, #0056b3); color: #fff; }
-        .hero h1 { font-size: 2.4rem; margin: 0 0 10px; }
-        .hero p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
-        .content { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Heebo', system-ui, sans-serif;
+            background: #f4f6fb;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.15rem; color: #1e293b; }
+        .logo-badge {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: linear-gradient(135deg, #6c5ce7, #341f97);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 18px;
+            box-shadow: 0 4px 12px rgba(108,92,231,0.35);
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, #6c5ce7, #341f97);
+            color: #fff; border: none; padding: 10px 22px;
+            border-radius: 999px; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; font-family: inherit;
+            box-shadow: 0 6px 16px rgba(108,92,231,0.35);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(108,92,231,0.45); }
+        .hero {
+            text-align: center;
+            padding: 90px 24px 70px;
+            background:
+                radial-gradient(600px 300px at 20% 20%, rgba(108,92,231,0.12), transparent 60%),
+                radial-gradient(500px 300px at 80% 10%, rgba(52,211,153,0.12), transparent 60%),
+                #f4f6fb;
+        }
+        .hero .pill {
+            display: inline-block; padding: 8px 18px; border-radius: 999px;
+            background: #fff; border: 1px solid rgba(0,0,0,0.08);
+            font-size: 0.85rem; font-weight: 500; color: #6c5ce7;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900; line-height: 1.2; color: #0f172a; }
+        .hero h1 span { background: linear-gradient(135deg, #6c5ce7, #341f97); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { margin-top: 18px; font-size: 1.15rem; color: #64748b; max-width: 620px; margin-inline: auto; }
+        .content { max-width: 1080px; margin: 0 auto; padding: 40px 24px 90px; }
+        .card {
+            background: #fff; border-radius: 20px; padding: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.04);
+            line-height: 1.9;
+        }
+        .card h2 { font-size: 1.4rem; margin-bottom: 14px; color: #0f172a; }
+        .card p { color: #475569; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px; }
+        .feature-tile {
+            background: #f8fafc; border-radius: 14px; padding: 18px;
+            border: 1px solid rgba(0,0,0,0.05); text-align: center;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .feature-tile:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+        .feature-tile .icon { font-size: 28px; display: block; margin-bottom: 8px; }
+        .feature-tile .name { font-weight: 700; font-size: 0.95rem; color: #334155; }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>Welcome to My Standard Website</h1>
-        <p>לוחצים על הכפתור הצף שלמטה כדי לפתוח את תפריט הנגישות ולבדוק את התוסף.</p>
-    </div>
-    <div class="content">
-        <p>This is a testing viewport for our comprehensive open-source accessibility plugin.</p>
-        <p>גרסת הדמו מלמדת כיצד לקרוא לתוסף עם ההגדרות הרצויות: מיקום, צבע, שפת ברירת מחדל וצורת הכפתור.</p>
-    </div>
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-badge">♿</div>
+            TabNav Accessibility
+        </div>
+        <button class="nav-cta" id="demo-open">פתח את תפריט הנגישות</button>
+    </nav>
 
-    <!-- Plugin Scripts Initialization -->
+    <header class="hero">
+        <span class="pill">✨ תוסף קוד פתוח · בחינם · לשימוש מסחרי</span>
+        <h1>נגישות זה <span>לא פרט — זה חובה.</span></h1>
+        <p>וידג'ט נגישות חכם, מהיר ומתאפס לעיצוב שלך. נתמך באנגלית, עברית, ספרדית וצרפתית, עם 7 כלי נגישות חיוניים.</p>
+    </header>
+
+    <main class="content">
+        <div class="card">
+            <h2>מה התוסף מציע?</h2>
+            <p>לחצו על הכפתור הצף הצדדי או על הכפתור למעלה כדי לפתוח את התפריט המלא — כולל אישור הצהרת אחריות, החלפת שפה וכלי נגישות בזמן אמת.</p>
+            <div class="features-grid">
+                <div class="feature-tile"><span class="icon">🌓</span><span class="name">ניגודיות גבוהה</span></div>
+                <div class="feature-tile"><span class="icon">⚫</span><span class="name">שחור-לבן</span></div>
+                <div class="feature-tile"><span class="icon">🔍</span><span class="name">הגדלת טקסט</span></div>
+                <div class="feature-tile"><span class="icon">⏸️</span><span class="name">עצירת אנימציות</span></div>
+                <div class="feature-tile"><span class="icon">🖱️</span><span class="name">סמן גדול</span></div>
+                <div class="feature-tile"><span class="icon">🌐</span><span class="name">4 שפות מובנות</span></div>
+            </div>
+        </div>
+    </main>
+
     <script src="accessibility.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            new AccessibilityPlugin({
+            window.demoPlugin = new AccessibilityPlugin({
                 position: 'bottom-right',
-                primaryColor: '#002B5B',
+                primaryColor: '#6c5ce7',
                 defaultLanguage: 'he',
                 iconShape: 'circle'
+            });
+            document.getElementById('demo-open').addEventListener('click', function() {
+                window.demoPlugin.openMenu();
             });
         });
     </script>

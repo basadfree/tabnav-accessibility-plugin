@@ -254,5 +254,20 @@
     transition: none !important;
 }
 .acc-text-large { font-size: 1.15rem !important; }
-.acc-text-spacing * { letter-spacing: 0.15em !important; }
+/* Text spacing — exact WCAG 1.4.12 metrics (WAI):
+   line-height ≥ 1.5x, paragraph spacing ≥ 2x, letter-spacing ≥ 0.12em, word-spacing ≥ 0.16em */
+.acc-text-spacing * {
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+}
+.acc-text-spacing p,
+.acc-text-spacing li,
+.acc-text-spacing dd,
+.acc-text-spacing blockquote {
+    margin-bottom: 2em !important;
+}
+.acc-text-spacing h1, .acc-text-spacing h2, .acc-text-spacing h3,
+.acc-text-spacing h4, .acc-text-spacing h5, .acc-text-spacing h6 {
+    margin-top: 0.5em !important;
+}
 .acc-line-height * { line-height: 1.8 !important; }

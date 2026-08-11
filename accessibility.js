@@ -174,7 +174,7 @@
                 </div>
                 <div class="acc-body grid-layout">
                     ${Object.keys(FEATURE_CLASSES).map(action => `
-                        <button class="acc-feature-btn" data-action="${action}" aria-pressed="false">
+                        <button class="acc-feature-btn${document.documentElement.classList.contains(FEATURE_CLASSES[action]) ? ' active' : ''}" data-action="${action}" aria-pressed="${document.documentElement.classList.contains(FEATURE_CLASSES[action]) ? 'true' : 'false'}">
                             <span class="acc-ico">${ICONS[FEATURE_ICONS[action]]}</span>
                             <span>${t[this.translationKey(action)]}</span>
                         </button>

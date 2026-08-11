@@ -6,12 +6,12 @@
 (function () {
     // ---------- Inline SVG icon set (stroke-based, inherits currentColor) ----------
     const ICONS = {
-        // Universal accessibility symbol (ISO 7000-0100 style)
-        main: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="6" r="1.9"/><path d="M12 8v6M12 14l-4.6 4.4M12 14l4.6 4.4M7.4 10.5h9.2"/></svg>',
+        // Universal accessibility symbol (person in a circle)
+        main: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.6"/><circle cx="12" cy="5.6" r="2" fill="currentColor" stroke="none"/><path d="M12 8.4v6.6M12 12.6l-4.8 4.4M12 12.6l4.8 4.4M6.8 10.2h10.4"/></svg>',
         globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.9 5.6 3.9 9s-1.3 6.5-3.9 9c-2.6-2.5-3.9-5.6-3.9-9s1.3-6.5 3.9-9z"/></svg>',
         contrast: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>',
         monochrome: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"/></svg>',
-        cursor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l15 8-6.5 1.8L10.6 19 8 16.4 4 18z"/></svg>',
+        cursor: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M5 3l15 8-6.5 1.8L10.6 19 8 16.4 4 18z"/></svg>',
         pause: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 5v14M15 5v14"/></svg>',
         textLarge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l4-12 4 12M9.5 17h5"/><path d="M19 5v3M17.5 6.5h3"/></svg>',
         textSpacing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3-3 3 3M3 16l3 3 3-3M4 12h16M21 8l-3-3-3 3M21 16l-3 3-3-3M20 12h-16"/></svg>',

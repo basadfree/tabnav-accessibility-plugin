@@ -3,135 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TabNav Accessibility Plugin Demo</title>
+    <title>TabNav — תפריט נגישות פתוח</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="accessibility.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Heebo', system-ui, sans-serif;
-            background: #f4f6fb;
-            color: #1e293b;
+            background: #f5f2ec;
+            color: #1c1917;
             min-height: 100vh;
+            line-height: 1.75;
+            overflow-x: hidden;
         }
+        h1, h2, h3 { font-family: 'Frank Ruhl Libre', Georgia, serif; font-weight: 900; letter-spacing: -0.01em; }
+
+        /* ---- ambient 3D canvas background ---- */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .page { position: relative; z-index: 1; }
+
+        /* ---- nav ---- */
         .nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 32px;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding: 22px 48px;
+            max-width: 1320px;
+            margin: 0 auto;
         }
-        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.15rem; color: #1e293b; }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.05rem; color: #1c1917; }
         .logo-badge {
-            width: 36px; height: 36px; border-radius: 10px;
-            background: linear-gradient(135deg, #6c5ce7, #341f97);
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #c2410c, #7c2d12);
             display: flex; align-items: center; justify-content: center;
             color: #fff;
-            box-shadow: 0 4px 12px rgba(108,92,231,0.35);
+            box-shadow: 0 6px 18px rgba(124,45,18,0.3);
         }
         .logo-badge svg { width: 22px; height: 22px; }
+        .nav-links { display: flex; gap: 34px; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: #57534e; font-size: 0.95rem; font-weight: 500;
+            transition: color 0.5s cubic-bezier(0.25,1,0.5,1);
+        }
+        .nav-links a:hover { color: #1c1917; }
         .nav-cta {
-            background: linear-gradient(135deg, #6c5ce7, #341f97);
-            color: #fff; border: none; padding: 10px 22px;
-            border-radius: 999px; font-weight: 700; font-size: 0.9rem;
+            background: #1c1917; color: #f5f2ec;
+            border: none; padding: 12px 26px; font-weight: 500; font-size: 0.9rem;
             cursor: pointer; font-family: inherit;
-            box-shadow: 0 6px 16px rgba(108,92,231,0.35);
-            transition: transform .2s, box-shadow .2s;
+            border-radius: 3px 22px 3px 22px;
+            transition: background 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
         }
-        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(108,92,231,0.45); }
+        .nav-cta:hover { background: #c2410c; transform: translateY(-2px); }
+
+        /* ---- hero (editorial asymmetry) ---- */
         .hero {
-            text-align: center;
-            padding: 90px 24px 70px;
-            background:
-                radial-gradient(600px 300px at 20% 20%, rgba(108,92,231,0.12), transparent 60%),
-                radial-gradient(500px 300px at 80% 10%, rgba(52,211,153,0.12), transparent 60%),
-                #f4f6fb;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 72px;
+            align-items: center;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 90px 48px 110px;
         }
-        .hero .pill {
-            display: inline-block; padding: 8px 18px; border-radius: 999px;
-            background: #fff; border: 1px solid rgba(0,0,0,0.08);
-            font-size: 0.85rem; font-weight: 500; color: #6c5ce7;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 24px;
+        .hero .meta {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #a8a29e;
+            margin-bottom: 26px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900; line-height: 1.2; color: #0f172a; }
-        .hero h1 span { background: linear-gradient(135deg, #6c5ce7, #341f97); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { margin-top: 18px; font-size: 1.15rem; color: #64748b; max-width: 620px; margin-inline: auto; }
-        .content { max-width: 1080px; margin: 0 auto; padding: 40px 24px 90px; }
-        .card {
-            background: #fff; border-radius: 20px; padding: 40px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.04);
-            line-height: 1.9;
+        .hero .meta::after { content: ''; width: 46px; height: 1px; background: #d6d3d1; display: inline-block; }
+        .hero h1 {
+            font-size: clamp(2.6rem, 6vw, 4.6rem);
+            line-height: 1.05;
+            color: #1c1917;
+            max-width: 14ch;
         }
-        .card h2 { font-size: 1.4rem; margin-bottom: 14px; color: #0f172a; }
-        .card p { color: #475569; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px; }
-        .feature-tile {
-            background: #f8fafc; border-radius: 14px; padding: 18px;
-            border: 1px solid rgba(0,0,0,0.05); text-align: center;
-            transition: transform .2s, box-shadow .2s;
+        .hero h1 .accent { color: #c2410c; font-style: italic; font-weight: 500; }
+        .hero .underline {
+            margin-top: 30px;
+            width: 210px; height: auto; color: #c2410c;
         }
-        .feature-tile:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
-        .feature-tile .icon { display: inline-flex; width: 34px; height: 34px; color: #6c5ce7; margin-bottom: 8px; }
-        .feature-tile .icon svg { width: 100%; height: 100%; }
-        .feature-tile .name { font-weight: 700; font-size: 0.95rem; color: #334155; }
+        .hero .sub {
+            margin-top: 30px;
+            font-size: 1.12rem;
+            color: #57534e;
+            max-width: 46ch;
+            font-weight: 300;
+        }
+        .hero-actions { margin-top: 44px; display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn-primary {
+            background: #c2410c; color: #fff;
+            border: none; padding: 16px 34px; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; font-family: inherit;
+            border-radius: 4px 26px 4px 26px;
+            box-shadow: 0 14px 30px rgba(194,65,12,0.28);
+            transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), box-shadow 0.6s cubic-bezier(0.25,1,0.5,1);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(194,65,12,0.35); }
+        .btn-ghost {
+            background: transparent; color: #1c1917;
+            border: 1px solid #d6d3d1; padding: 16px 30px; font-weight: 500; font-size: 0.9rem;
+            cursor: pointer; font-family: inherit;
+            border-radius: 4px 26px 4px 26px;
+            transition: border-color 0.5s cubic-bezier(0.25,1,0.5,1), color 0.5s cubic-bezier(0.25,1,0.5,1);
+        }
+        .btn-ghost:hover { border-color: #1c1917; }
+
+        /* hero visual: diagonal card mock */
+        .hero-visual { position: relative; }
+        .mock-card {
+            background: #fff;
+            border-radius: 52px 6px 52px 6px;
+            padding: 40px 36px;
+            box-shadow: 0 30px 70px rgba(28,25,23,0.10);
+            position: relative;
+        }
+        .mock-card .mock-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 28px;
+        }
+        .mock-card .mock-title { font-size: 1.3rem; color: #1c1917; display: flex; align-items: center; gap: 10px; }
+        .mock-card .mock-title svg { width: 22px; height: 22px; color: #c2410c; }
+        .mock-lang {
+            font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+            color: #a8a29e; border: 1px solid #e7e5e4; padding: 6px 12px;
+            border-radius: 3px 14px 3px 14px;
+        }
+        .mock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .mock-tile {
+            border-radius: 24px 4px 24px 4px;
+            background: #faf8f4;
+            padding: 22px 14px;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .mock-tile .mi { width: 40px; height: 40px; background: #fff; border-radius: 14px 3px 14px 3px; display: flex; align-items: center; justify-content: center; color: #44403c; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+        .mock-tile .mi svg { width: 21px; height: 21px; }
+        .mock-tile .ml { font-size: 0.72rem; color: #57534e; font-weight: 500; }
+        .mock-tile.active { background: linear-gradient(135deg, #c2410c, #7c2d12); }
+        .mock-tile.active .mi { color: #fff; background: rgba(255,255,255,0.16); }
+        .mock-tile.active .ml { color: #fff; }
+
+        /* ---- features ---- */
+        .features {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 30px 48px 130px;
+        }
+        .features-head {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: end;
+            margin-bottom: 60px;
+        }
+        .features-head .meta {
+            font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: #a8a29e; margin-bottom: 18px;
+        }
+        .features-head h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.15; color: #1c1917; }
+        .features-head p { color: #57534e; font-weight: 300; font-size: 1.05rem; }
+        .feature-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+        .feature-card {
+            background: #fff;
+            border-radius: 0 42px 0 42px;
+            padding: 38px 34px;
+            box-shadow: 0 16px 40px rgba(28,25,23,0.06);
+            transition: transform 0.7s cubic-bezier(0.25,1,0.5,1), box-shadow 0.7s cubic-bezier(0.25,1,0.5,1);
+        }
+        .feature-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(28,25,23,0.10); }
+        .feature-card .fi { width: 52px; height: 52px; border-radius: 18px 4px 18px 4px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; color: #c2410c; margin-bottom: 26px; }
+        .feature-card .fi svg { width: 26px; height: 26px; }
+        .feature-card h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 700; }
+        .feature-card p { color: #78716c; font-size: 0.95rem; font-weight: 300; }
+
+        /* ---- footer ---- */
+        .footer {
+            border-top: 1px solid #e7e5e4;
+            padding: 46px 48px;
+            max-width: 1320px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #a8a29e;
+            font-size: 0.85rem;
+        }
+        .footer .tag { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.68rem; }
+
+        @media (max-width: 900px) {
+            .nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .hero { grid-template-columns: 1fr; padding: 60px 24px 80px; gap: 50px; }
+            .features { padding: 20px 24px 90px; }
+            .features-head { grid-template-columns: 1fr; }
+            .feature-list { grid-template-columns: 1fr; }
+            .footer { flex-direction: column; gap: 14px; text-align: center; }
+        }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <div class="logo">
-            <div class="logo-badge">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
-            </div>
-            TabNav Accessibility
-        </div>
-        <button class="nav-cta" id="demo-open">פתח את תפריט הנגישות</button>
-    </nav>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="page">
 
-    <header class="hero">
-        <span class="pill">✨ תוסף קוד פתוח · בחינם · לשימוש מסחרי</span>
-        <h1>נגישות זה <span>לא פרט — זה חובה.</span></h1>
-        <p>וידג'ט נגישות חכם, מהיר ומתאפס לעיצוב שלך. נתמך באנגלית, עברית, ספרדית וצרפתית, עם 7 כלי נגישות חיוניים.</p>
-    </header>
-
-    <main class="content">
-        <div class="card">
-            <h2>מה התוסף מציע?</h2>
-            <p>לחצו על הכפתור הצף הצדדי או על הכפתור למעלה כדי לפתוח את התפריט המלא — כולל אישור הצהרת אחריות, החלפת שפה וכלי נגישות בזמן אמת.</p>
-            <div class="features-grid">
-                <div class="feature-tile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" stroke="none"/></svg></span><span class="name">ניגודיות גבוהה</span></div>
-                <div class="feature-tile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor" stroke="none"/></svg></span><span class="name">שחור-לבן</span></div>
-                <div class="feature-tile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span><span class="name">הגדלת טקסט</span></div>
-                <div class="feature-tile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></span><span class="name">עצירת אנימציות</span></div>
-                <div class="feature-tile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6" stroke-width="4"/></svg></span><span class="name">סמן גדול</span></div>
-                <div class="feature-tile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span class="name">4 שפות מובנות</span></div>
+        <nav class="nav">
+            <div class="logo">
+                <div class="logo-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+                </div>
+                TabNav
             </div>
-        </div>
-    </main>
+            <div class="nav-links">
+                <a href="#hero">בית</a>
+                <a href="#features">יכולות</a>
+                <a href="https://github.com/basadfree/tabnav-accessibility-plugin">GitHub</a>
+            </div>
+            <button class="nav-cta" id="demo-open">פתח את התפריט</button>
+        </nav>
+
+        <header class="hero" id="hero">
+            <div>
+                <span class="meta">תוסף קוד פתוח · חינמי · למסחר</span>
+                <h1>נגישות שהיא <span class="accent">טבע שני</span> לאתר שלך</h1>
+                <svg class="underline" viewBox="0 0 210 12" fill="none" aria-hidden="true">
+                    <path d="M3 9 Q 70 3, 120 7 T 207 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <p class="sub">וידג'ט נגישות נקי, מהיר ומותאם אישית — 7 כלים, 4 שפות, וזיהוי אוטומטי של שפת המבקר. בלי הגדרות מסובכות, בלי חסימות.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary" id="demo-open-2">נסה את הווידג'ט</button>
+                    <a class="btn-ghost" href="https://github.com/basadfree/tabnav-accessibility-plugin" target="_blank" rel="noopener">קוד המקור</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="mock-card" aria-hidden="true">
+                    <div class="mock-header">
+                        <div class="mock-title">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+                            תפריט נגישות
+                        </div>
+                        <span class="mock-lang">עברית</span>
+                    </div>
+                    <div class="mock-grid">
+                        <div class="mock-tile active">
+                            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" stroke="none"/></svg></span>
+                            <span class="ml">ניגודיות גבוהה</span>
+                        </div>
+                        <div class="mock-tile">
+                            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span>
+                            <span class="ml">הגדלת טקסט</span>
+                        </div>
+                        <div class="mock-tile">
+                            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6" stroke-width="3.2"/></svg></span>
+                            <span class="ml">סמן גדול</span>
+                        </div>
+                        <div class="mock-tile">
+                            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></span>
+                            <span class="ml">עצירת אנימציות</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="features" id="features">
+            <div class="features-head">
+                <div>
+                    <div class="meta">יכולות</div>
+                    <h2>עשוי בדיוק כמו שצריך, לא כמו שמצפים</h2>
+                </div>
+                <p>פינות ייחודיות, שפה אנושית, ואייקונים שנוצרו בעבודת יד. הווידג'ט מתמזג בעיצוב של כל אתר — ומכבד את המבקר שלו.</p>
+            </div>
+            <div class="feature-list">
+                <div class="feature-card">
+                    <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.6"/><circle cx="12" cy="5.6" r="2" fill="currentColor" stroke="none"/><path d="M12 8.4v6.6M12 12.6l-4.8 4.4M12 12.6l4.8 4.4M6.8 10.2h10.4"/></svg></span>
+                    <h3>7 כלי נגישות</h3>
+                    <p>מניגודיות גבוהה ועצירת אנימציות ועד הגדלת טקסט ומרווחי שורות — מופעלים מיידית.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+                    <h3>4 שפות, זיהוי אוטומטי</h3>
+                    <p>אנגלית, עברית, ספרדית וצרפתית — השפה נבחרת לבד לפי שפת הדפדפן של המבקר.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span>
+                    <h3>התאמה מלאה</h3>
+                    <p>מיקום, צבע ראשי וצורת הכפתור — הכל מוגדר בשורת קוד אחת, ללא ליבה מקובעת.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span>TabNav Accessibility Plugin</span>
+            <span class="tag">בנוי באהבה · קוד פתוח</span>
+        </footer>
+    </div>
 
     <script src="accessibility.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             window.demoPlugin = new AccessibilityPlugin({
                 position: 'bottom-right',
-                primaryColor: '#6c5ce7',
+                primaryColor: '#c2410c',
                 defaultLanguage: 'en',
                 autoDetectLanguage: true,
-                iconShape: 'circle'
+                iconShape: 'square'
             });
-            document.getElementById('demo-open').addEventListener('click', function() {
-                window.demoPlugin.openMenu();
-            });
+            document.getElementById('demo-open').addEventListener('click', () => window.demoPlugin.openMenu());
+            document.getElementById('demo-open-2').addEventListener('click', () => window.demoPlugin.openMenu());
         });
+    </script>
+
+    <script>
+        // Lightweight ambient depth: blobs that follow the cursor.
+        (function () {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, mouseX = 0.5, mouseY = 0.5, targetX = 0.5, targetY = 0.5;
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            window.addEventListener('mousemove', (e) => {
+                targetX = e.clientX / W;
+                targetY = e.clientY / H;
+            });
+
+            const blobs = [
+                { x: 0.2, y: 0.25, r: 320, depth: 0.05, hue: '194,65,12' },
+                { x: 0.85, y: 0.15, r: 260, depth: 0.03, hue: '214,211,209' },
+                { x: 0.75, y: 0.8, r: 380, depth: 0.07, hue: '168,162,158' },
+                { x: 0.1, y: 0.85, r: 240, depth: 0.04, hue: '194,65,12' }
+            ];
+
+            function frame() {
+                mouseX += (targetX - mouseX) * 0.04;
+                mouseY += (targetY - mouseY) * 0.04;
+                ctx.clearRect(0, 0, W, H);
+                for (const b of blobs) {
+                    const offX = (mouseX - 0.5) * b.depth * W * 1.6;
+                    const offY = (mouseY - 0.5) * b.depth * H * 1.6;
+                    const x = b.x * W + offX;
+                    const y = b.y * H + offY;
+                    const g = ctx.createRadialGradient(x, y, 0, x, y, b.r);
+                    g.addColorStop(0, 'rgba(' + b.hue + ',0.10)');
+                    g.addColorStop(1, 'rgba(' + b.hue + ',0)');
+                    ctx.fillStyle = g;
+                    ctx.fillRect(x - b.r, y - b.r, b.r * 2, b.r * 2);
+                }
+                requestAnimationFrame(frame);
+            }
+            frame();
+        })();
     </script>
 </body>
 </html>

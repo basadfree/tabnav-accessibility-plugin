@@ -83,6 +83,18 @@
         }
         .nav-cta:hover { background: #c2410c; transform: translateY(-2px); }
 
+        /* language switcher */
+        .lang-switch { display: flex; gap: 4px; border: 1px solid #d6d3d1; border-radius: 4px 18px 4px 18px; padding: 4px; background: #fff; }
+        .lang-btn {
+            border: none; background: transparent; color: #78716c;
+            font-family: inherit; font-weight: 700; font-size: 0.78rem;
+            padding: 6px 10px; cursor: pointer; border-radius: 3px 12px 3px 12px;
+            transition: background 0.5s cubic-bezier(0.25,1,0.5,1), color 0.5s cubic-bezier(0.25,1,0.5,1);
+        }
+        .lang-btn:hover { color: #1c1917; }
+        .lang-btn.active { background: #1c1917; color: #f5f2ec; }
+        .lang-btn:focus-visible { outline: 3px solid #c2410c; outline-offset: 2px; }
+
         /* ---- hero (editorial asymmetry) ---- */
         .hero {
             display: grid;
@@ -235,11 +247,11 @@
     </style>
 </head>
 <body>
-    <a class="skip-link" href="#main-content">דלג לתוכן</a>
+    <a class="skip-link" href="#main-content" data-i18n="skip">דלג לתוכן</a>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="page">
 
-        <nav class="nav" aria-label="ראשי">
+        <nav class="nav" aria-label="ראשי" data-i18n-aria="navAria">
             <div class="logo">
                 <div class="logo-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
@@ -247,25 +259,31 @@
                 <span>TabNav</span>
             </div>
             <div class="nav-links">
-                <a href="#hero" aria-current="page">בית</a>
-                <a href="#features">יכולות</a>
+                <a href="#hero" aria-current="page" data-i18n="navHome">בית</a>
+                <a href="#features" data-i18n="navFeatures">יכולות</a>
                 <a href="https://github.com/basadfree/tabnav-accessibility-plugin">GitHub</a>
             </div>
-            <button class="nav-cta" id="demo-open">פתח את התפריט</button>
+            <div class="lang-switch" role="group" aria-label="Language">
+                <button data-lang="en" class="lang-btn">EN</button>
+                <button data-lang="he" class="lang-btn">עב</button>
+                <button data-lang="es" class="lang-btn">ES</button>
+                <button data-lang="fr" class="lang-btn">FR</button>
+            </div>
+            <button class="nav-cta" id="demo-open" data-i18n="navOpen">פתח את התפריט</button>
         </nav>
 
         <main id="main-content">
         <header class="hero" id="hero">
             <div>
-                <span class="meta">תוסף קוד פתוח · חינמי · למסחר</span>
-                <h1>נגישות שהיא <span class="accent">טבע שני</span> לאתר שלך</h1>
+                <span class="meta" data-i18n="heroMeta">תוסף קוד פתוח · חינמי · למסחר</span>
+                <h1><span data-i18n="heroTitle1">נגישות שהיא</span> <span class="accent" data-i18n="heroAccent">טבע שני</span> <span data-i18n="heroTitle2">לאתר שלך</span></h1>
                 <svg class="underline" viewBox="0 0 210 12" fill="none" aria-hidden="true">
                     <path d="M3 9 Q 70 3, 120 7 T 207 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                 </svg>
-                <p class="sub">וידג'ט נגישות נקי, מהיר ומותאם אישית — 7 כלים, 4 שפות, וזיהוי אוטומטי של שפת המבקר. בלי הגדרות מסובכות, בלי חסימות.</p>
+                <p class="sub" data-i18n="heroSub">וידג'ט נגישות נקי, מהיר ומותאם אישית — 7 כלים, 4 שפות, וזיהוי אוטומטי של שפת המבקר. בלי הגדרות מסובכות, בלי חסימות.</p>
                 <div class="hero-actions">
-                    <button class="btn-primary" id="demo-open-2">נסה את הווידג'ט</button>
-                    <a class="btn-ghost" href="https://github.com/basadfree/tabnav-accessibility-plugin" target="_blank" rel="noopener">קוד המקור</a>
+                    <button class="btn-primary" id="demo-open-2" data-i18n="tryWidget">נסה את הווידג'ט</button>
+                    <a class="btn-ghost" href="https://github.com/basadfree/tabnav-accessibility-plugin" target="_blank" rel="noopener" data-i18n="sourceCode">קוד המקור</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -273,26 +291,26 @@
                     <div class="mock-header">
                         <div class="mock-title">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
-                            תפריט נגישות
+                            <span data-i18n="mockTitle">תפריט נגישות</span>
                         </div>
-                        <span class="mock-lang">עברית</span>
+                        <span class="mock-lang" data-i18n="mockLang">עברית</span>
                     </div>
                     <div class="mock-grid">
                         <div class="mock-tile active">
                             <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" stroke="none"/></svg></span>
-                            <span class="ml">ניגודיות גבוהה</span>
+                            <span class="ml" data-i18n="tileContrast">ניגודיות גבוהה</span>
                         </div>
                         <div class="mock-tile">
                             <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span>
-                            <span class="ml">הגדלת טקסט</span>
+                            <span class="ml" data-i18n="tileText">הגדלת טקסט</span>
                         </div>
                         <div class="mock-tile">
                             <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6" stroke-width="3.2"/></svg></span>
-                            <span class="ml">סמן גדול</span>
+                            <span class="ml" data-i18n="tileCursor">סמן גדול</span>
                         </div>
                         <div class="mock-tile">
                             <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></span>
-                            <span class="ml">עצירת אנימציות</span>
+                            <span class="ml" data-i18n="tileAnim">עצירת אנימציות</span>
                         </div>
                     </div>
                 </div>
@@ -302,26 +320,26 @@
         <section class="features" id="features">
             <div class="features-head">
                 <div>
-                    <div class="meta">יכולות</div>
-                    <h2>עשוי בדיוק כמו שצריך, לא כמו שמצפים</h2>
+                    <div class="meta" data-i18n="featMeta">יכולות</div>
+                    <h2 data-i18n="featTitle">עשוי בדיוק כמו שצריך, לא כמו שמצפים</h2>
                 </div>
-                <p>פינות ייחודיות, שפה אנושית, ואייקונים שנוצרו בעבודת יד. הווידג'ט מתמזג בעיצוב של כל אתר — ומכבד את המבקר שלו.</p>
+                <p data-i18n="featSub">פינות ייחודיות, שפה אנושית, ואייקונים שנוצרו בעבודת יד. הווידג'ט מתמזג בעיצוב של כל אתר — ומכבד את המבקר שלו.</p>
             </div>
             <div class="feature-list">
                 <div class="feature-card">
                     <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.6"/><circle cx="12" cy="5.6" r="2" fill="currentColor" stroke="none"/><path d="M12 8.4v6.6M12 12.6l-4.8 4.4M12 12.6l4.8 4.4M6.8 10.2h10.4"/></svg></span>
-                    <h3>7 כלי נגישות</h3>
-                    <p>מניגודיות גבוהה ועצירת אנימציות ועד הגדלת טקסט ומרווחי שורות — מופעלים מיידית.</p>
+                    <h3 data-i18n="feat1Title">7 כלי נגישות</h3>
+                    <p data-i18n="feat1Body">מניגודיות גבוהה ועצירת אנימציות ועד הגדלת טקסט ומרווחי שורות — מופעלים מיידית.</p>
                 </div>
                 <div class="feature-card">
                     <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-                    <h3>4 שפות, זיהוי אוטומטי</h3>
-                    <p>אנגלית, עברית, ספרדית וצרפתית — השפה נבחרת לבד לפי שפת הדפדפן של המבקר.</p>
+                    <h3 data-i18n="feat2Title">4 שפות, זיהוי אוטומטי</h3>
+                    <p data-i18n="feat2Body">אנגלית, עברית, ספרדית וצרפתית — השפה נבחרת לבד לפי שפת הדפדפן של המבקר.</p>
                 </div>
                 <div class="feature-card">
                     <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span>
-                    <h3>התאמה מלאה</h3>
-                    <p>מיקום, צבע ראשי וצורת הכפתור — הכל מוגדר בשורת קוד אחת, ללא ליבה מקובעת.</p>
+                    <h3 data-i18n="feat3Title">התאמה מלאה</h3>
+                    <p data-i18n="feat3Body">מיקום, צבע ראשי וצורת הכפתור — הכל מוגדר בשורת קוד אחת, ללא ליבה מקובעת.</p>
                 </div>
             </div>
         </section>
@@ -329,11 +347,124 @@
 
         <footer class="footer">
             <span>TabNav Accessibility Plugin</span>
-            <span class="tag">בנוי באהבה · קוד פתוח</span>
+            <span class="tag" data-i18n="footerTag">בנוי באהבה · קוד פתוח</span>
         </footer>
     </div>
 
-    <script src="accessibility.js?v=2"></script>
+    <script src="accessibility.js?v=3"></script>
+    <script>
+        // ---------- Page i18n (auto-detect user language + manual override + sync with widget) ----------
+        (function () {
+            const DICT = {
+                en: {
+                    skip: "Skip to content", navAria: "Main", navHome: "Home", navFeatures: "Features", navOpen: "Open the menu",
+                    heroMeta: "Open source · Free · Commercial-ready",
+                    heroTitle1: "Accessibility that is", heroAccent: "second nature", heroTitle2: "for your website",
+                    heroSub: "A clean, fast, fully customizable accessibility widget — 7 tools, 4 languages, and automatic visitor-language detection. No complex settings, no blockers.",
+                    tryWidget: "Try the widget", sourceCode: "Source code",
+                    mockTitle: "Accessibility Menu", mockLang: "English",
+                    tileContrast: "High Contrast", tileText: "Enlarge Text", tileCursor: "Large Cursor", tileAnim: "Stop Animations",
+                    featMeta: "Features", featTitle: "Made exactly how it should be — not how you'd expect",
+                    featSub: "Distinctive corners, human language, handcrafted icons. The widget blends into any site's design — and respects its visitors.",
+                    feat1Title: "7 accessibility tools", feat1Body: "From high contrast and stop animations to enlarged text and line spacing — applied instantly.",
+                    feat2Title: "4 languages, auto-detected", feat2Body: "English, Hebrew, Spanish and French — chosen automatically from the visitor's browser language.",
+                    feat3Title: "Fully customizable", feat3Body: "Position, primary color and button shape — all set in a single line of code, no fixed core.",
+                    footerTag: "Built with love · Open source",
+                    pageTitle: "TabNav — Accessible Menu"
+                },
+                he: {
+                    skip: "דלג לתוכן", navAria: "ראשי", navHome: "בית", navFeatures: "יכולות", navOpen: "פתח את התפריט",
+                    heroMeta: "תוסף קוד פתוח · חינמי · למסחר",
+                    heroTitle1: "נגישות שהיא", heroAccent: "טבע שני", heroTitle2: "לאתר שלך",
+                    heroSub: "וידג'ט נגישות נקי, מהיר ומותאם אישית — 7 כלים, 4 שפות, וזיהוי אוטומטי של שפת המבקר. בלי הגדרות מסובכות, בלי חסימות.",
+                    tryWidget: "נסה את הווידג'ט", sourceCode: "קוד המקור",
+                    mockTitle: "תפריט נגישות", mockLang: "עברית",
+                    tileContrast: "ניגודיות גבוהה", tileText: "הגדלת טקסט", tileCursor: "סמן גדול", tileAnim: "עצירת אנימציות",
+                    featMeta: "יכולות", featTitle: "עשוי בדיוק כמו שצריך, לא כמו שמצפים",
+                    featSub: "פינות ייחודיות, שפה אנושית, ואייקונים שנוצרו בעבודת יד. הווידג'ט מתמזג בעיצוב של כל אתר — ומכבד את המבקר שלו.",
+                    feat1Title: "7 כלי נגישות", feat1Body: "מניגודיות גבוהה ועצירת אנימציות ועד הגדלת טקסט ומרווחי שורות — מופעלים מיידית.",
+                    feat2Title: "4 שפות, זיהוי אוטומטי", feat2Body: "אנגלית, עברית, ספרדית וצרפתית — השפה נבחרת לבד לפי שפת הדפדפן של המבקר.",
+                    feat3Title: "התאמה מלאה", feat3Body: "מיקום, צבע ראשי וצורת הכפתור — הכל מוגדר בשורת קוד אחת, ללא ליבה מקובעת.",
+                    footerTag: "בנוי באהבה · קוד פתוח",
+                    pageTitle: "TabNav — תפריט נגישות פתוח"
+                },
+                es: {
+                    skip: "Saltar al contenido", navAria: "Principal", navHome: "Inicio", navFeatures: "Características", navOpen: "Abrir el menú",
+                    heroMeta: "Código abierto · Gratuito · Listo para uso comercial",
+                    heroTitle1: "Accesibilidad que es", heroAccent: "segunda naturaleza", heroTitle2: "para tu sitio web",
+                    heroSub: "Un widget de accesibilidad limpio, rápido y personalizable — 7 herramientas, 4 idiomas y detección automática del idioma del visitante. Sin configuraciones complejas.",
+                    tryWidget: "Probar el widget", sourceCode: "Código fuente",
+                    mockTitle: "Menú de accesibilidad", mockLang: "Español",
+                    tileContrast: "Alto contraste", tileText: "Agrandar texto", tileCursor: "Cursor grande", tileAnim: "Detener animaciones",
+                    featMeta: "Características", featTitle: "Hecho exactamente como debe ser — no como esperarías",
+                    featSub: "Esquinas distintivas, lenguaje humano, iconos artesanales. El widget se integra en cualquier diseño — y respeta a sus visitantes.",
+                    feat1Title: "7 herramientas de accesibilidad", feat1Body: "Del alto contraste y la detención de animaciones al texto ampliado y el espaciado — aplicado al instante.",
+                    feat2Title: "4 idiomas, detección automática", feat2Body: "Inglés, hebreo, español y francés — elegidos automáticamente según el idioma del navegador del visitante.",
+                    feat3Title: "Totalmente personalizable", feat3Body: "Posición, color principal y forma del botón — todo en una línea de código, sin núcleo fijo.",
+                    footerTag: "Hecho con amor · Código abierto",
+                    pageTitle: "TabNav — Menú de accesibilidad"
+                },
+                fr: {
+                    skip: "Aller au contenu", navAria: "Principal", navHome: "Accueil", navFeatures: "Fonctionnalités", navOpen: "Ouvrir le menu",
+                    heroMeta: "Open source · Gratuit · Prêt pour le commerce",
+                    heroTitle1: "Une accessibilité qui est", heroAccent: "naturelle", heroTitle2: "pour votre site",
+                    heroSub: "Un widget d'accessibilité propre, rapide et personnalisable — 7 outils, 4 langues et détection automatique de la langue du visiteur. Sans réglages complexes.",
+                    tryWidget: "Essayer le widget", sourceCode: "Code source",
+                    mockTitle: "Menu d'accessibilité", mockLang: "Français",
+                    tileContrast: "Contraste élevé", tileText: "Agrandir le texte", tileCursor: "Grand curseur", tileAnim: "Arrêter les animations",
+                    featMeta: "Fonctionnalités", featTitle: "Fait exactement comme il se doit — pas comme on s'y attend",
+                    featSub: "Coins distinctifs, langage humain, icônes artisanales. Le widget se fond dans n'importe quel design — et respecte ses visiteurs.",
+                    feat1Title: "7 outils d'accessibilité", feat1Body: "Du contraste élevé et de l'arrêt des animations au texte agrandi et à l'interlignage — appliqués instantanément.",
+                    feat2Title: "4 langues, détection automatique", feat2Body: "Anglais, hébreu, espagnol et français — choisis automatiquement selon la langue du navigateur du visiteur.",
+                    feat3Title: "Entièrement personnalisable", feat3Body: "Position, couleur principale et forme du bouton — tout en une ligne de code, sans noyau fixe.",
+                    footerTag: "Fait avec amour · Open source",
+                    pageTitle: "TabNav — Menu d'accessibilité"
+                }
+            };
+            const STORE_KEY = 'tabnav_demo_lang';
+            const LTR_LANGS = ['en', 'es', 'fr'];
+
+            function detect() {
+                const saved = localStorage.getItem(STORE_KEY);
+                if (saved && DICT[saved]) return saved;
+                const nav = (navigator.language || navigator.userLanguage || '').toLowerCase().split('-')[0];
+                return DICT[nav] ? nav : 'en';
+            }
+
+            function apply(lang) {
+                const t = DICT[lang];
+                document.documentElement.lang = lang;
+                document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+                document.title = t.pageTitle;
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    el.textContent = t[el.getAttribute('data-i18n')];
+                });
+                document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                    el.setAttribute('aria-label', t[el.getAttribute('data-i18n-aria')]);
+                });
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+                });
+                if (window.demoPlugin && window.demoPlugin.setLanguage) {
+                    window.demoPlugin.setLanguage(lang);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                window.tabnavApplyLang = apply;
+                window.tabnavCurrentLang = detect;
+                apply(detect());
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const lang = this.getAttribute('data-lang');
+                        localStorage.setItem(STORE_KEY, lang);
+                        apply(lang);
+                    });
+                });
+            });
+        })();
+    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             window.demoPlugin = new AccessibilityPlugin({
@@ -343,6 +474,9 @@
                 autoDetectLanguage: true,
                 iconShape: 'square'
             });
+            if (window.tabnavApplyLang && window.tabnavCurrentLang) {
+                window.tabnavApplyLang(window.tabnavCurrentLang());
+            }
             document.getElementById('demo-open').addEventListener('click', () => window.demoPlugin.openMenu());
             document.getElementById('demo-open-2').addEventListener('click', () => window.demoPlugin.openMenu());
         });

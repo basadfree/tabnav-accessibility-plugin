@@ -260,6 +260,14 @@
             }
         }
 
+        // Public: programmatically switch the widget language (used by hosts to sync with page language).
+        setLanguage(lang) {
+            if (Object.keys(translations).indexOf(lang) === -1) return;
+            this.currentLang = lang;
+            this.panel.classList.toggle('rtl', lang === 'he');
+            this.renderContent();
+        }
+
         shade(hex, percent) {
             const num = parseInt(hex.replace('#', ''), 16);
             const amt = Math.round(2.55 * percent);
